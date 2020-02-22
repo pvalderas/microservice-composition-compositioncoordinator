@@ -47,6 +47,6 @@ dependencies {
 }
 
 jar{
-    baseName = 'microservice.composition.compositionCoordinator'
+    baseName = 'microservice.composition.compositioncoordinator'
     version =  '0.1.0'
 }
