@@ -36,8 +36,16 @@ public class EventSender implements JavaDelegate {
 				String composition=message.getExpressionText().substring(0,message.getExpressionText().indexOf("_"));
 				String client=Clients.currentClient.get(composition.toLowerCase()); 
 				String topic=microservice.getExpressionText().toLowerCase()+"."+composition.toLowerCase()+"."+client;
-				channel.basicPublish(EventManager.getRABBITMQ_EXCHANGE(), topic, null, message.getExpressionText().getBytes());
 				
+				try {
+					JSONObject messageJSON = new JSONObject(message);
+					messageJSON.put("message",message.getExpressionText());
+					messageJSON.put("client",client);
+					channel.basicPublish(EventManager.getRABBITMQ_EXCHANGE(), topic, null, messageJSON.toString().getBytes());
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+
 				channel.close();
 				connection.close();
 				
