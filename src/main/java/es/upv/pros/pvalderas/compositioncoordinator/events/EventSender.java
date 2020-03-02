@@ -39,7 +39,7 @@ public class EventSender implements JavaDelegate {
 				String topic=microservice.getExpressionText().toLowerCase()+"."+composition.toLowerCase()+"."+client;
 				
 				try {
-					JSONObject messageJSON = new JSONObject(message);
+					JSONObject messageJSON = new JSONObject();
 					messageJSON.put("message",message.getExpressionText());
 					messageJSON.put("client",client);
 					channel.basicPublish(EventManager.getRABBITMQ_EXCHANGE(), topic, null, messageJSON.toString().getBytes());
